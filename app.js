@@ -14,9 +14,8 @@ class Store {
 }
 
 class Note {
-  constructor(textarea, statusIndicator, store, constants = CONSTANTS) {
+  constructor(textarea, store, constants = CONSTANTS) {
     this.textarea = textarea;
-    this.statusIndicator = statusIndicator;
     this.store = store;
     this.constants = constants;
     this.saveDebounce = null;
@@ -46,27 +45,14 @@ class Note {
       this.textarea.value = savedNote;
     }
   }
-
-  displaySaveIndicator() {
-    if (!this.saveDebounce) {
-      this.statusIndicator.innerHTML = 'Saved!';
-
-      setTimeout(() => {
-        this.statusIndicator.innerHTML = '';
-      }, 1000);
-    }
-  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const textarea = document.querySelector('textarea');
-  const statusIndicator = document.querySelector('.status');
-
   const store = new Store();
-  const note = new Note(textarea, statusIndicator, store);
+  const note = new Note(textarea, store);
 
   textarea.addEventListener('input', note.changeHandler);
-
   note.load();
 });
 
